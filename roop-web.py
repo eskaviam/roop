@@ -78,12 +78,20 @@ def connect(token, port, options):
 def encode_execution_providers(execution_providers: List[str]) -> List[str]:
     return [execution_provider.replace('ExecutionProvider', '').lower() for execution_provider in execution_providers]
 
+
 def decode_execution_providers(execution_providers: List[str]) -> List[str]:
     return [provider for provider, encoded_execution_provider in zip(onnxruntime.get_available_providers(), encode_execution_providers(onnxruntime.get_available_providers()))
             if any(execution_provider in encoded_execution_provider for execution_provider in execution_providers)]
 
+
 def suggest_execution_providers() -> List[str]:
     return encode_execution_providers(onnxruntime.get_available_providers())
+
+
+def suggest_execution_threads() -> int:
+    if 'CUDAExecutionProvider' in onnxruntime.get_available_providers():
+        return 8
+    return 1
 
 def limit_resources() -> None:
     import platform, tensorflow
@@ -231,6 +239,8 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
         print("Error: Invalid executor value. Using CPU as default.")
         executorvalue.append("cpu")
 
+    suggest = suggest_execution_providers()    
+    print(suggest)
     print(f"Execution providers: {executorvalue[0]}")
 
     roop.globals.source_path = img
