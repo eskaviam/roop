@@ -164,6 +164,7 @@ DEFAULT_CODEC = 'hevc_nvenc' if check_nvenc_availability() else 'libx265'
 print(DEFAULT_CODEC)
 
 frameprocessor = []
+executorvalue = []
 def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_count: int) -> Tuple[str, str]:
     '''
     Description:
@@ -220,6 +221,14 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
     infos.append(f"CPU threads given: {cpu_thread_count}")
     yield '\n'.join(infos), None
 
+    if executor == "GPU":
+        executorvalue.append("cuda")
+    elif executor == "CPU":
+        executorvalue.append("cpu")
+    else:
+        print("Error: Invalid executor value. Using CPU as default.")
+        executorvalue.append("cpu")
+
     roop.globals.source_path = img
     roop.globals.target_path = vid
     roop.globals.keep_fps = keepfps
@@ -229,7 +238,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
     roop.globals.temp_frame_quality = 0
     roop.globals.output_video_quality = 0
     roop.globals.temp_frame_format = img.split('.')[-1].lower()
-    roop.globals.execution_providers = decode_execution_providers(suggest_execution_providers())
+    roop.globals.execution_providers = decode_execution_providers(executorvalue)
     roop.globals.reference_frame_number = 0
     roop.globals.reference_face_position = 0
     roop.globals.similar_face_distance = 0.85
@@ -288,6 +297,19 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                         )
 
                         with gr.Column():
+
+                            executor = gr.Radio(
+                                value = "face_swapper",
+                                label = "Processor",
+                                type  = 'value',
+                                value = 'GPU',
+                                info  = "Use GPU if available",
+                                choices = [
+                                    "GPU",
+                                    "CPU"
+                                ]
+                            )
+
                             options = gr.CheckboxGroup(
                                 label = "Options for Conversion",
                                 choices = [
@@ -314,7 +336,7 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                             )
                             
                             processor = gr.Radio(
-                                value = "face_swapper",
+                                value = "face swapper",
                                 label = "Processor",
                                 type  = 'value',
                                 info  = "swapping or enhancing or both",
@@ -344,7 +366,7 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                         step = 1,
                         minimum = 1,
                         value = math.floor(CPU_THREADS / 3),
-                        maximum = CPU_THREADS,
+                        maximum = 10,
                         interactive = True,
                         container = False,
                     )
