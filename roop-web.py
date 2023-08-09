@@ -231,8 +231,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
         print("Error: Invalid executor value. Using CPU as default.")
         executorvalue.append("cpu")
 
-    decoded_providers = decode_execution_providers(executorvalue)
-    print(f"Execution providers: {decoded_providers}")
+    print(f"Execution providers: {executorvalue[0]}")
 
     roop.globals.source_path = img
     roop.globals.target_path = vid
@@ -243,7 +242,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
     roop.globals.temp_frame_quality = 0
     roop.globals.output_video_quality = 0
     roop.globals.temp_frame_format = img.split('.')[-1].lower()
-    roop.globals.execution_providers = decoded_providers
+    roop.globals.execution_providers = executorvalue[0]
     roop.globals.reference_frame_number = 0
     roop.globals.reference_face_position = 0
     roop.globals.similar_face_distance = 0.85
