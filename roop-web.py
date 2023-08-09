@@ -283,7 +283,8 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
         print("Unknown processor, using default... (face swapper)")
         frameprocessor.append("face_swapper")
     
-    roop.globals.frame_processors = frameprocessor[0]
+    print(f"Frame processors: {frameprocessor[0]}")
+    roop.globals.frame_processors = frameprocessor
 
     infos.append(f"Values assigned.")
     yield  '\n'.join(infos), None
