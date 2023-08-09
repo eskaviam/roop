@@ -295,6 +295,10 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
     yield  '\n'.join(infos), roop.globals.output_path
     return '\n'.join(infos), roop.globals.output_path
 
+def refreshall():
+    frameprocessor.clear()
+    executorvalue.clear()
+
 def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
     with gr.Blocks(theme = UTheme, title = "Roop UI") as app:
         gr.HTML("<h1>🚀 Roop UI Colab by alunit3</h1>")
@@ -398,7 +402,7 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                     )
 
                     prevwbtn = gr.Button(
-                        value = "Preview",
+                        value = "Press this everytime after generate",
                         variant = 'primary',
                     )
 
@@ -445,9 +449,9 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                     )
 
                     prevwbtn.click(
-                        fn = lambda: "Preview hasn't been implemented yet :(",
-                        inputs = [],
-                        outputs = [info0]
+                        fn = refreshall,
+                        #inputs = [],
+                        #outputs = [info0]
                     )
 
         app.queue(concurrency_count=511, max_size=1022).launch(
