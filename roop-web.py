@@ -299,7 +299,6 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                         with gr.Column():
 
                             executor = gr.Radio(
-                                value = "face_swapper",
                                 label = "Processor",
                                 type  = 'value',
                                 info  = "Use GPU if available",
@@ -335,7 +334,6 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                             )
                             
                             processor = gr.Radio(
-                                value = "face swapper",
                                 label = "Processor",
                                 type  = 'value',
                                 info  = "swapping or enhancing or both",
