@@ -221,9 +221,9 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
     infos.append(f"CPU threads given: {cpu_thread_count}")
     yield '\n'.join(infos), None
 
-    if executor == "GPU":
+    if roopexecutor == "GPU":
         executorvalue.append("cuda")
-    elif executor == "CPU":
+    elif roopexecutor == "CPU":
         executorvalue.append("cpu")
     else:
         print("Error: Invalid executor value. Using CPU as default.")
@@ -298,7 +298,7 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
 
                         with gr.Column():
 
-                            executor = gr.Radio(
+                            roopexecutor = gr.Radio(
                                 label = "Processor",
                                 type  = 'value',
                                 info  = "Use GPU if available",
