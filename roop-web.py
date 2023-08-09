@@ -231,8 +231,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
         print("Error: Invalid executor value. Using CPU as default.")
         executorvalue.append("cpu")
 
-    encoded_providers = encode_execution_providers(onnxruntime.get_available_providers())
-    decoded_providers = decode_execution_providers(executorvalue, encoded_providers)
+    decoded_providers = decode_execution_providers(executorvalue)
     print(f"Execution providers: {decoded_providers}")
 
     roop.globals.source_path = img
