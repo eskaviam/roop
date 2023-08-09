@@ -298,6 +298,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
 def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
     with gr.Blocks(theme = UTheme, title = "Roop UI") as app:
         gr.HTML("<h1>🚀 Roop UI Colab by alunit3</h1>")
+        gr.Markdown("# ‼️ THIS UI IS STILL IN BETA, SOMETHING MIGHT NOT WORK, IF THATS THE CASE JUST USE THE COMMANDLINE VERSION ‼️")
         with gr.Tabs():
             with gr.TabItem(label = "Roop"):
                 with gr.Group():
