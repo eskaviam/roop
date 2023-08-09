@@ -231,16 +231,19 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
 
     if roopexecutor == "GPU":
         print("Using GPU executor.")
-        executorvalue.append("cuda")
+        executorvalue.append("CUDAExecutionProvider")
     elif roopexecutor == "CPU":
         print("Using CPU executor.")
-        executorvalue.append("cpu")
+        executorvalue.append("CPUExecutionProvider")
     else:
         print("Error: Invalid executor value. Using CPU as default.")
         executorvalue.append("cpu")
 
-    suggest = suggest_execution_providers()    
-    print(suggest)
+    suggest = suggest_execution_providers()
+    print(f"Available execution providers:")
+    for suggestions in suggest:
+        print(suggestions)
+        
     print(f"Execution providers: {executorvalue[0]}")
 
     roop.globals.source_path = img
@@ -252,7 +255,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
     roop.globals.temp_frame_quality = 0
     roop.globals.output_video_quality = 0
     roop.globals.temp_frame_format = img.split('.')[-1].lower()
-    roop.globals.execution_providers = ['CUDAExecutionProvider']
+    roop.globals.execution_providers = executorvalue[0]
     roop.globals.reference_frame_number = 0
     roop.globals.reference_face_position = 0
     roop.globals.similar_face_distance = 0.85
@@ -280,7 +283,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
         print("Unknown processor, using default... (face swapper)")
         frameprocessor.append("face_swapper")
     
-    roop.globals.frame_processors = frameprocessor
+    roop.globals.frame_processors = frameprocessor[0]
 
     infos.append(f"Values assigned.")
     yield  '\n'.join(infos), None
