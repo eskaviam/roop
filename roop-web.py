@@ -165,7 +165,7 @@ print(DEFAULT_CODEC)
 
 frameprocessor = []
 executorvalue = []
-def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_count: int) -> Tuple[str, str]:
+def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_count: int, processor: str, roopexecutor: str) -> Tuple[str, str]:
     '''
     Description:
         Parses options list and executes video face swapping
@@ -299,7 +299,7 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                         with gr.Column():
 
                             roopexecutor = gr.Radio(
-                                label = "Processor",
+                                label = "Executor",
                                 type  = 'value',
                                 info  = "Use GPU if available",
                                 choices = [
@@ -415,7 +415,9 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                             inpimg,
                             inpvid,
                             codec,
-                            cpucount
+                            cpucount,
+                            processor,
+                            roopexecutor
                         ],
                         outputs = [
                             info0,
