@@ -163,6 +163,7 @@ def check_nvenc_availability():
 DEFAULT_CODEC = 'hevc_nvenc' if check_nvenc_availability() else 'libx265'
 print(DEFAULT_CODEC)
 
+frameprocessor = []
 def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_count: int) -> Tuple[str, str]:
     '''
     Description:
@@ -245,7 +246,18 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
 
     roop.globals.output_path = os.path.join(os.path.dirname(vid), ofilename)
 
-    roop.globals.frame_processors = ['face_swapper']
+    if processor == "face swapper":
+        frameprocessor.append("face_swapper")
+    elif processor == "face enhancer":
+        frameprocessor.append("face_enhancer")
+    elif processor == "swapper and enhancer":
+        frameprocessor.append("face_swapper")
+        frameprocessor.append("face_enhancer")
+    else:
+        print("Unknown processor, using default... (face swapper)")
+        frameprocessor.append("face_swapper")
+    
+    roop.globals.frame_processors = frameprocessor
 
     infos.append(f"Values assigned.")
     yield  '\n'.join(infos), None
@@ -298,6 +310,18 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                                     "libvpx-vp9",
                                     "h264_nvenc",
                                     "hevc_nvenc"
+                                ]
+                            )
+                            
+                            processor = gr.Radio(
+                                value = "face_swapper",
+                                label = "Processor",
+                                type  = 'value',
+                                info  = "swapping or enhancing or both",
+                                choices = [
+                                    "face swapper",
+                                    "face enhancer",
+                                    "swapper and enhancer"
                                 ]
                             )
 
