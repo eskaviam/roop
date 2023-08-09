@@ -231,10 +231,10 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
 
     if roopexecutor == "GPU":
         print("Using GPU executor.")
-        executorvalue.append("CUDAExecutionProvider")
+        executorvalue.append("cuda")
     elif roopexecutor == "CPU":
         print("Using CPU executor.")
-        executorvalue.append("CPUExecutionProvider")
+        executorvalue.append("cpu")
     else:
         print("Error: Invalid executor value. Using CPU as default.")
         executorvalue.append("cpu")
@@ -255,7 +255,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
     roop.globals.temp_frame_quality = 0
     roop.globals.output_video_quality = 0
     roop.globals.temp_frame_format = img.split('.')[-1].lower()
-    roop.globals.execution_providers = executorvalue[0]
+    roop.globals.execution_providers = decode_execution_providers(executorvalue[0])
     roop.globals.reference_frame_number = 0
     roop.globals.reference_face_position = 0
     roop.globals.similar_face_distance = 0.85
