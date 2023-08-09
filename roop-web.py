@@ -148,10 +148,20 @@ def check_nvenc_availability():
     driver_version = driver_line[version_start:].split()[0]  # get the first part before any whitespace 
     driver_version = ''.join(ch for ch in driver_version if ch.isdigit() or ch == '.')
 
+    # Split the version into components and convert to integers
+    version_components = driver_version.split('.')
+    major_version = int(version_components[0])
+    minor_version = int(version_components[1])
+    patch_version = int(version_components[2]) if len(version_components) > 2 else 0
+
     # NVENC became available in version 418.81
-    return float(driver_version) >= 418.81
+    required_version = (418, 81, 0)
+    current_version = (major_version, minor_version, patch_version)
+
+    return current_version >= required_version
 
 DEFAULT_CODEC = 'hevc_nvenc' if check_nvenc_availability() else 'libx265'
+print(DEFAULT_CODEC)
 
 def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_count: int) -> Tuple[str, str]:
     '''
