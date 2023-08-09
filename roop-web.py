@@ -302,7 +302,6 @@ def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
                                 value = "face_swapper",
                                 label = "Processor",
                                 type  = 'value',
-                                value = 'GPU',
                                 info  = "Use GPU if available",
                                 choices = [
                                     "GPU",
