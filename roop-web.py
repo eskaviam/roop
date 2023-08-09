@@ -283,7 +283,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
         print("Unknown processor, using default... (face swapper)")
         frameprocessor.append("face_swapper")
     
-    print(f"Frame processors: {frameprocessor[0]}")
+    print(f"Frame processors: {frameprocessor}")
     roop.globals.frame_processors = frameprocessor
 
     infos.append(f"Values assigned.")
@@ -298,6 +298,7 @@ def start_pl(options_list: tuple, img: str, vid: str, codec: str, cpu_thread_cou
 def refreshall():
     frameprocessor.clear()
     executorvalue.clear()
+    print(f"{frame_processor},{executorvalue} cleared")
 
 def GradioInit(UTheme="JohnSmith9982/small_and_pretty"):
     with gr.Blocks(theme = UTheme, title = "Roop UI") as app:
